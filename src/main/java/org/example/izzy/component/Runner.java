@@ -35,8 +35,8 @@ public class Runner implements CommandLineRunner {
                 User user = userRepository.save(
                         User.builder()
                                 .fullName("Nick Holden")
-                                .phoneNumber("+998901234567")
-                                .password(passwordEncoder.encode("a111"))
+                                .email("tonym5one@gmail.com")
+                                .password(passwordEncoder.encode("1"))
                                 .isActive(true)
                                 .roles(roles)
                                 .build()

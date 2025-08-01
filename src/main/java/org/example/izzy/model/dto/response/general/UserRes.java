@@ -6,7 +6,7 @@ import java.util.UUID;
 public record UserRes(
         UUID id,
         String fullName,
-        String phoneNumber,
+        String email,
         List<String> roles
 ) {
 }

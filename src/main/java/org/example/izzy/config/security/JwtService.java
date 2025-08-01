@@ -33,12 +33,12 @@ public class JwtService {
         return Keys.hmacShaKeyFor(jwtSecretKey.getBytes());
     }
 
-    public String generateToken(String phoneNumber) {
-        User user = userRepository.findByPhoneNumber(phoneNumber).orElseThrow(() ->
-                new ResourceNotFoundException("User not found with phone number: " + phoneNumber));
+    public String generateToken(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() ->
+                new ResourceNotFoundException("User not found with @Email: " + email));
 
         return Jwts.builder()
-                .subject(phoneNumber)
+                .subject(email)
                 .claim("id", user.getId())
                 .claim("isActive", user.getIsActive())
                 .claim("roles", user.getRoles().stream().map(role ->
@@ -79,7 +79,7 @@ public class JwtService {
         return User.builder()
                 .id(id)
                 .isActive(isActive)
-                .phoneNumber(claims.getSubject())
+                .email(claims.getSubject())
                 .roles(roles)
                 .build();
     }

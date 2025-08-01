@@ -26,13 +26,12 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String fullName;
 
-    @Column(name = "phone_number", nullable = false, unique = true)
-    private String phoneNumber;
+    @Column( nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String password;
 
-//    private String email;
     private String verificationCode;
 
     @ManyToMany
@@ -45,7 +44,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.phoneNumber;
+        return this.email;
     }
 
     @Override

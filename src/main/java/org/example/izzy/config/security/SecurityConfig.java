@@ -33,22 +33,17 @@ public class SecurityConfig {
                 auth
                         .requestMatchers(
                                 API + V1 + AUTH + LOGIN,
-                                API + V1 + AUTH + REGISTER
+                                API + V1 + AUTH + REGISTER,
+                                API + V1 + AUTH + VERIFY
                         ).permitAll()
                         .requestMatchers(
-                                API + V1 + VERIFY + SEND,
-                                API + V1 + VERIFY + CHECK
-                        ).permitAll()
-
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**").permitAll()
                         .requestMatchers(
-                                API + V1 + ADMIN + CATEGORY + "/**",
-                                API + V1 + ADMIN + ATTACHMENT + "/**"
-                        ).permitAll()
-                        .requestMatchers(
-                                "/**",
-                                "/category-crud.html"
+                                "/**"
                                 ).permitAll()
-                        .anyRequest().authenticated());
+                        .anyRequest().permitAll());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

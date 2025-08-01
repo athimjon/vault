@@ -32,7 +32,7 @@ public class AdminAttachmentController {
     }
 
     @PutMapping("/{attachmentId}")
-    public ResponseEntity<Void> updateFile(@PathVariable  UUID attachmentId, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Void> updateAttachment(@PathVariable  UUID attachmentId, @RequestParam("file") MultipartFile file) {
         log.warn("Updating attachment with ID: {} with a new ATTACHMENT : {}", attachmentId, file.getOriginalFilename());
         adminAttachmentService.updateAttachment(attachmentId, file);
         return ResponseEntity.ok().build();

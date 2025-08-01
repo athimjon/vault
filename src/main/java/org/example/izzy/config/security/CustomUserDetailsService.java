@@ -16,11 +16,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
-        log.debug("Attempting to load user by phone number: {}", phoneNumber);
-        return userRepository.findByPhoneNumber(phoneNumber).orElseThrow(() -> {
-            log.warn("User not found with phone number: {}", phoneNumber);
-            return new UsernameNotFoundException("User not found with phone number: " + phoneNumber);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        log.debug("Attempting to load user by @EMAIL: {}", email);
+        return userRepository.findByEmail(email).orElseThrow(() -> {
+            log.warn("User not found with @EMAIL: {}", email);
+            return new UsernameNotFoundException("User not found with @EMAIL: " + email);
         });
     }
 }

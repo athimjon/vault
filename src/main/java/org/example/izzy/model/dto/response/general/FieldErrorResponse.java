@@ -10,7 +10,7 @@ public record FieldErrorResponse(
         int status,
         String error,
         String path,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
         LocalDateTime timestamp,
         Map<String, String> fieldErrors
 ) {

@@ -4,16 +4,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record CodeVerificationReq(
+public record RegisterReq(
+        @NotBlank(message = "FullName must provided")
+        String fullName,
         @NotBlank(message = "Email must not be empty")
         @Email(message = "Invalid email format")
         @Pattern(
                 regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
                 message = "Email format is invalid"
         )
-        String email,
-        @NotBlank(message = "Verification code is required.")
-        @Pattern(regexp = "^\\d{6}$", message = "Code must be exactly 6 digits.")
-        String code
+        String email
 ) {
 }
