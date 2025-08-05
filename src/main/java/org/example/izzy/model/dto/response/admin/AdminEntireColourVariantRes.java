@@ -18,6 +18,8 @@ public record AdminEntireColourVariantRes(
         Integer sizes,
         List<AdminSizeVariantRes> sizeVariants,
 
+        UUID productId,
+
         Integer totalStock,
         Boolean isActive,
 

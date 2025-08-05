@@ -28,12 +28,12 @@ public class AdminColourVariantController {
         AdminEntireColourVariantRes adminColourVariantRes = adminColourVariantService.createEntireColourVariant(colourVariantReq);
         return ResponseEntity.status(HttpStatus.CREATED).body(adminColourVariantRes);
     }
-
-    @GetMapping(BY_PRODUCT + "/{productId}")
-    public ResponseEntity<List<AdminEntireColourVariantRes>> getEntireColourVariantsByProductId(@PathVariable UUID productId) {
-        List<AdminEntireColourVariantRes> colourVariantRes = adminColourVariantService.getEntireColourVariantsByProductId(productId);
-        return ResponseEntity.ok(colourVariantRes);
-    }
+//TEMPORARILY  DISABLED GETTING COLOUR_VARIANT BY PRODUCT_ID ENDPOINT
+//    @GetMapping(BY_PRODUCT + "/{productId}")
+//    public ResponseEntity<List<AdminEntireColourVariantRes>> getEntireColourVariantsByProductId(@PathVariable UUID productId) {
+//        List<AdminEntireColourVariantRes> colourVariantRes = adminColourVariantService.getEntireColourVariantsByProductId(productId);
+//        return ResponseEntity.ok(colourVariantRes);
+//    }
 
     @GetMapping("/{colourVariantId}")
     public ResponseEntity<AdminEntireColourVariantRes> getOneEntireColourVariant(@PathVariable UUID colourVariantId) {

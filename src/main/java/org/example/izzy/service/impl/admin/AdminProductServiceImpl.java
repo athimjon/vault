@@ -66,6 +66,12 @@ AdminProductServiceImpl implements AdminProductService {
         return productMapper.toAdminEntireProductRes(productFromDB);
     }
 
+    @Override
+    public List<AdminEntireProductRes> getListOfEntireProductsWithVariants() {
+        List<Product> products = productRepository.findAll();
+        return productMapper.toAdminEntireProductResList(products);
+    }
+
 
     private Product findProductFromDB(UUID productId) {
         return productRepository.findById(productId).orElseThrow(() ->

@@ -49,6 +49,7 @@ public interface ColourVariantMapper {
     @Mapping(source = "sizeVariants", target = "sizes", qualifiedByName = "countSizeVariants")
     @Mapping(source = "sizeVariants", target = "totalStock", qualifiedByName = "calculateTotalStock")
 
+    @Mapping(source = "product.id",target = "productId")
     @Mapping(source = "sizeVariants", target = "sizeVariants")
     AdminEntireColourVariantRes toAdminEntireColourVariantRes(ColourVariant colourVariant);
 

@@ -62,5 +62,11 @@ public class AdminProductController {
         return ResponseEntity.ok(productRes);
     }
 
+    @GetMapping( ENTIRE)
+    public ResponseEntity<List<AdminEntireProductRes>> getListOfEntireProductsWithVariants() {
+        List<AdminEntireProductRes> productRes = adminProductService.getListOfEntireProductsWithVariants();
+        return ResponseEntity.ok(productRes);
+    }
+
 
 }

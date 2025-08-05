@@ -1,5 +1,7 @@
 package org.example.izzy.mapper;
 
+import org.example.izzy.mapper.helper.GeneralMapperHelper;
+import org.example.izzy.model.dto.request.admin.AdminFullSizeVariantReq;
 import org.example.izzy.model.dto.request.admin.AdminSizeVariantReq;
 import org.example.izzy.model.dto.response.admin.AdminSizeVariantRes;
 import org.example.izzy.model.entity.SizeVariant;
@@ -9,9 +11,8 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",uses = {GeneralMapperHelper.class})
 public interface SizeVariantMapper {
-
 
     SizeVariant toEntity(AdminSizeVariantReq sizeVariantReq);
 
@@ -25,4 +26,7 @@ public interface SizeVariantMapper {
 
 
     void updateSizeVariantFromSizeVariantReq(@MappingTarget SizeVariant sizeVariantFromDB, AdminSizeVariantReq sizeVariantReq);
+
+    @Mapping(source = "colourVariantId", target = "colourVariant",qualifiedByName = "mapColourVariantIdToColourVariant")
+    SizeVariant toEntityFromAdminFullSizeVariantReq(AdminFullSizeVariantReq sizeVariantReq);
 }

@@ -1,6 +1,5 @@
 package org.example.izzy.controller.admin;
 
-import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.izzy.service.interfaces.admin.AdminAttachmentService;

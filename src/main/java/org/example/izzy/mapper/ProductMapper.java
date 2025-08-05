@@ -47,6 +47,5 @@ public interface ProductMapper {
     @Mapping(source = "colourVariants", target = "colourVariants")
     AdminEntireProductRes toAdminEntireProductRes(Product productFromDB);
 
-
-
+    List<AdminEntireProductRes> toAdminEntireProductResList(List<Product> products);
 }

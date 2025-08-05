@@ -3,6 +3,7 @@ package org.example.izzy.service.impl.admin;
 import lombok.RequiredArgsConstructor;
 import org.example.izzy.exception.ResourceNotFoundException;
 import org.example.izzy.mapper.SizeVariantMapper;
+import org.example.izzy.model.dto.request.admin.AdminFullSizeVariantReq;
 import org.example.izzy.model.dto.request.admin.AdminSizeVariantReq;
 import org.example.izzy.model.dto.response.admin.AdminSizeVariantRes;
 import org.example.izzy.model.entity.SizeVariant;
@@ -30,6 +31,13 @@ public class AdminSizeVariantServiceImpl implements AdminSizeVariantService {
         SizeVariant sizeVariantFromDB = findSizeVariantFromDB(sizeVariantId);
         sizeVariantMapper.updateSizeVariantFromSizeVariantReq(sizeVariantFromDB, sizeVariantReq);
         return sizeVariantMapper.toAdminSizeVariantRes(sizeVariantFromDB);
+    }
+
+    @Override
+    public AdminSizeVariantRes createSizeVariant(AdminFullSizeVariantReq sizeVariantReq) {
+        SizeVariant entity = sizeVariantMapper.toEntityFromAdminFullSizeVariantReq(sizeVariantReq);
+        SizeVariant saved = sizeVariantRepository.save(entity);
+        return sizeVariantMapper.toAdminSizeVariantRes(saved);
     }
 
     private SizeVariant findSizeVariantFromDB(UUID sizeVariantId) {

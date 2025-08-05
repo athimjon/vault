@@ -37,7 +37,7 @@ public class AdminCategoryController {
 
 
     @PostMapping
-    public ResponseEntity<?> saveCategory(@Valid @RequestBody AdminCategoryReq categoryReq) {
+    public ResponseEntity<AdminCategoryRes> saveCategory(@Valid @RequestBody AdminCategoryReq categoryReq) {
         AdminCategoryRes categoryRes = adminCategoryService.saveCategory(categoryReq);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryRes);
     }

@@ -21,4 +21,6 @@ public interface AdminProductService {
 
 
     AdminEntireProductRes getEntireProductWithVariants(UUID productId);
+
+    List<AdminEntireProductRes> getListOfEntireProductsWithVariants();
 }
