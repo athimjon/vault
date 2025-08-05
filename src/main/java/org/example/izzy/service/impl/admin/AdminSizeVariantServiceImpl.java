@@ -1,5 +1,6 @@
 package org.example.izzy.service.impl.admin;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.izzy.exception.ResourceNotFoundException;
 import org.example.izzy.mapper.SizeVariantMapper;
@@ -26,6 +27,7 @@ public class AdminSizeVariantServiceImpl implements AdminSizeVariantService {
         return sizeVariantMapper.toAdminSizeVariantRes(sizeVariant);
     }
 
+    @Transactional
     @Override
     public AdminSizeVariantRes updateSizeVariant(UUID sizeVariantId, AdminSizeVariantReq sizeVariantReq) {
         SizeVariant sizeVariantFromDB = findSizeVariantFromDB(sizeVariantId);

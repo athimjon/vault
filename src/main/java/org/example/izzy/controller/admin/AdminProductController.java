@@ -30,26 +30,26 @@ public class AdminProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<AdminProductRes> getOneProductWithoutItsVariants(@PathVariable UUID productId) {
+    public ResponseEntity<AdminProductRes> getOneProductWithoutItsVariants(@PathVariable UUID   productId) {
         AdminProductRes productRes = adminProductService.getOneProductWithoutItsVariants(productId);
         return ResponseEntity.ok(productRes);
     }
 
     @GetMapping
-    public ResponseEntity<List<AdminProductRes>> getAllProductsWithoutVariants() {
-        List<AdminProductRes> productRes = adminProductService.getAllProductsWithoutVariants();
+    public ResponseEntity<List<AdminProductRes>> getAllProductsWithoutItsVariants() {
+        List<AdminProductRes> productRes = adminProductService.getAllProductsWithoutItsVariants();
         return ResponseEntity.ok(productRes);
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<?> updateProductWithoutVariants(@PathVariable UUID productId, @Valid @RequestBody AdminProductReq adminProductReq) {
-        AdminProductRes adminProductRes = adminProductService.updateProductWithoutVariants(productId, adminProductReq);
+    public ResponseEntity<AdminProductRes> updateProductWithoutItsVariants(@PathVariable UUID productId, @Valid @RequestBody AdminProductReq adminProductReq) {
+        AdminProductRes adminProductRes = adminProductService.updateProductWithoutItsVariants(productId, adminProductReq);
         return ResponseEntity.ok(adminProductRes);
     }
 
 
     @PatchMapping("/{productId}")
-    public ResponseEntity<?> disableOrEnableProduct(@PathVariable UUID productId) {
+    public ResponseEntity<String> disableOrEnableProduct(@PathVariable UUID productId) {
         String message = adminProductService.disableOrEnableProduct(productId);
         return ResponseEntity.ok(message);
     }

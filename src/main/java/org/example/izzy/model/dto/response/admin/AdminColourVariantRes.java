@@ -12,16 +12,17 @@ public record AdminColourVariantRes(
 
         String colourName,
 
-        String productName,
+        UUID productId,
 
         Boolean isActive,
 
         List<UUID> imageIds,
         List<String>imageUrls,
 
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime createdAt,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime updatedAt,
 
         String createdBy,

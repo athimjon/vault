@@ -13,9 +13,9 @@ public interface AdminProductService {
 
     AdminProductRes getOneProductWithoutItsVariants(UUID productId);
 
-    List<AdminProductRes> getAllProductsWithoutVariants();
+    List<AdminProductRes> getAllProductsWithoutItsVariants();
 
-    AdminProductRes updateProductWithoutVariants(UUID productId, AdminProductReq adminProductReq);
+    AdminProductRes updateProductWithoutItsVariants(UUID productId, AdminProductReq adminProductReq);
 
     String disableOrEnableProduct(UUID productId);
 

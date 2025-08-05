@@ -23,7 +23,7 @@ public class AdminColourVariantController {
 
     private final AdminColourVariantService adminColourVariantService;
 
-    @PostMapping
+    @PostMapping(ENTIRE)
     public ResponseEntity<AdminEntireColourVariantRes> createEntireColourVariant(@Valid @RequestBody AdminEntireColourVariantReq colourVariantReq) {
         AdminEntireColourVariantRes adminColourVariantRes = adminColourVariantService.createEntireColourVariant(colourVariantReq);
         return ResponseEntity.status(HttpStatus.CREATED).body(adminColourVariantRes);
@@ -35,7 +35,7 @@ public class AdminColourVariantController {
 //        return ResponseEntity.ok(colourVariantRes);
 //    }
 
-    @GetMapping("/{colourVariantId}")
+    @GetMapping("/{colourVariantId}"+ENTIRE)
     public ResponseEntity<AdminEntireColourVariantRes> getOneEntireColourVariant(@PathVariable UUID colourVariantId) {
         AdminEntireColourVariantRes colourVariantRes = adminColourVariantService.getOneEntireColourVariant(colourVariantId);
         return ResponseEntity.ok(colourVariantRes);

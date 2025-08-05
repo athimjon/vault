@@ -37,7 +37,7 @@ AdminProductServiceImpl implements AdminProductService {
 
 
     @Override
-    public List<AdminProductRes> getAllProductsWithoutVariants() {
+    public List<AdminProductRes> getAllProductsWithoutItsVariants() {
         List<Product> products = productRepository.findAll();
         return productMapper.toAdminProductResList(products);
     }
@@ -45,7 +45,7 @@ AdminProductServiceImpl implements AdminProductService {
 
     @Override
     @Transactional
-    public AdminProductRes updateProductWithoutVariants(UUID productId, AdminProductReq adminProductReq) {
+    public AdminProductRes updateProductWithoutItsVariants(UUID productId, AdminProductReq adminProductReq) {
         Product productFromDB = findProductFromDB(productId);
         productMapper.updateProductFromAdminProductReq(adminProductReq, productFromDB);
         return productMapper.toAdminProductRes(productFromDB);

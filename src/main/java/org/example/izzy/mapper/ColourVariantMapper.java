@@ -30,7 +30,7 @@ public interface ColourVariantMapper {
 
 
 
-    @Mapping(source = "product.name", target = "productName")
+    @Mapping(source = "product.id", target = "productId")
     @Mapping(source = "images", target = "imageUrls", qualifiedByName = "mapAttachmentsToUrls")
     @Mapping(source = "images", target = "imageIds", qualifiedByName = "mapAttachmentsToIds")
     AdminColourVariantRes toAdminColourVariantRes(ColourVariant savedEntity);
@@ -47,7 +47,7 @@ public interface ColourVariantMapper {
     @Mapping(source = "images", target = "imageIds", qualifiedByName = "mapAttachmentsToIds")
     @Mapping(source = "images", target = "imageUrls", qualifiedByName = "mapAttachmentsToUrls")
     @Mapping(source = "sizeVariants", target = "sizes", qualifiedByName = "countSizeVariants")
-    @Mapping(source = "sizeVariants", target = "totalStock", qualifiedByName = "calculateTotalStock")
+    @Mapping(source = "sizeVariants", target = "stock", qualifiedByName = "calculateTotalStock")
 
     @Mapping(source = "product.id",target = "productId")
     @Mapping(source = "sizeVariants", target = "sizeVariants")

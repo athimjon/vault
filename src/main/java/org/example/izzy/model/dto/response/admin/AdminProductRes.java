@@ -15,6 +15,7 @@ public record AdminProductRes(
         Gender gender,
         ProductStatus status,
         String description,
+        UUID categoryId,
         String categoryName,
         Integer stock,
         Integer colours,
@@ -22,9 +23,9 @@ public record AdminProductRes(
 
         Boolean isActive,
 
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime createdAt,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime updatedAt,
 
         String createdBy,

@@ -6,9 +6,10 @@ import org.example.izzy.model.enums.ProductStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public record AdminEntireProductRes(
-
+        UUID id,
         String name,
         Integer price,
         Integer discount,
@@ -16,6 +17,7 @@ public record AdminEntireProductRes(
         ProductStatus status,
         String description,
 
+        UUID categoryId,
         String categoryName,
 
         Integer colours,
@@ -24,9 +26,10 @@ public record AdminEntireProductRes(
 
         Boolean isActive,
 
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime createdAt,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime updatedAt,
 
         String createdBy,

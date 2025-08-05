@@ -18,6 +18,7 @@ import java.util.List;
         ColourVariantMapper.class})
 public interface ProductMapper {
 
+    @Mapping(source = "category.id", target = "categoryId")
     @Mapping(source = "category.name", target = "categoryName")
     @Mapping(source = ".", target = "stock", qualifiedByName = "calculateStock")
     @Mapping(source = ".", target = "colours", qualifiedByName = "countColourVariants")
@@ -42,6 +43,7 @@ public interface ProductMapper {
 
 //ENTIRE RES
 
+    @Mapping(source = "category.id", target = "categoryId")
     @Mapping(source = "category.name", target = "categoryName")
     @Mapping(source = ".", target = "colours", qualifiedByName = "countColourVariants")
     @Mapping(source = "colourVariants", target = "colourVariants")

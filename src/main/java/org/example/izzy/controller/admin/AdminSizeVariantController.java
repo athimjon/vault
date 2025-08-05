@@ -22,7 +22,7 @@ public class AdminSizeVariantController {
     private final AdminSizeVariantService adminSizeVariantService;
 
     @PostMapping
-    public ResponseEntity<AdminSizeVariantRes> createSizeVariant(@RequestBody AdminFullSizeVariantReq sizeVariantReq) {
+    public ResponseEntity<AdminSizeVariantRes> createSizeVariant(@Valid @RequestBody AdminFullSizeVariantReq sizeVariantReq) {
         AdminSizeVariantRes sizeVariantRes = adminSizeVariantService.createSizeVariant(sizeVariantReq);
         return ResponseEntity.status(HttpStatus.CREATED).body(sizeVariantRes);
     }

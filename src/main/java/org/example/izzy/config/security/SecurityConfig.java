@@ -42,6 +42,8 @@ public class SecurityConfig {
                                 "/v3/api-docs/**").permitAll()
                         .requestMatchers(
                                 "/**"
+//                                "localhost:3000",
+//                                "localhost:3000/**"
                                 ).permitAll()
                         .anyRequest().permitAll());
 
