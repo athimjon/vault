@@ -3,41 +3,38 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main   # Runs when you push to main branch
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout project
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4   # updated to v4 (v3 is fine too)
 
-      # 2️⃣ Setup Java for building your Spring Boot backend
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
+          cache: maven
 
-      # 3️⃣ Build backend JAR
       - name: Build with Maven
-        run: mvn clean package -DskipTests
+        run: mvn -B clean package -DskipTests
 
-      # 4️⃣ Copy Docker and app files to server
       - name: Upload files to server via SCP
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          source: "Dockerfile, docker-compose.yml, target/*.jar"
+          source: "Dockerfile,docker-compose.yml,target/*.jar"
           target: "/tmp/izzy-deploy"
+          overwrite: true
 
-      # 5️⃣ Login to server and deploy with docker-compose
-      - name: SSH into AWS Server and Deploy
+      - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -47,41 +44,56 @@ jobs:
           script: |
             set -e
 
-            echo "📁 Creating project directory..."
+            echo "Creating project directory..."
             mkdir -p /home/${{ secrets.SSH_USER }}/izzy
 
-            echo "🧹 Cleaning old files..."
+            echo "Cleaning old files..."
             rm -rf /home/${{ secrets.SSH_USER }}/izzy/*
 
-            echo "📦 Moving new build files..."
+            echo "Moving new files..."
             mv /tmp/izzy-deploy/* /home/${{ secrets.SSH_USER }}/izzy/
             cd /home/${{ secrets.SSH_USER }}/izzy
 
-            echo "🔐 Creating .env file from GitHub Secrets..."
+            echo "Creating .env file..."
             cat <<EOF > .env
             DB_URL=${{ secrets.DB_URL }}
             DB_USER=${{ secrets.DB_USER }}
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-
             BUCKET_NAME=${{ secrets.BUCKET_NAME }}
             BUCKET_REGION=${{ secrets.BUCKET_REGION }}
             S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}
             S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}
-
             JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
             JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }}
-
             EMAIL_USERNAME=${{ secrets.EMAIL_USERNAME }}
             EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
             EOF
 
-            echo "🐳 Stopping old containers..."
+            # ────────────────────── THIS IS THE CRUCIAL PART ──────────────────────
+            # Install Docker if missing
+            if ! command -v docker >/dev/null 2>&1; then
+              echo "Installing Docker..."
+              curl -fsSL https://get.docker.com | sudo sh
+              sudo usermod -aG docker ${{ secrets.SSH_USER }} || true
+            fi
+
+            # Install Docker Compose plugin if missing (v2 = docker compose)
+            if ! docker compose version >/dev/null 2>&1; then
+              echo "Installing Docker Compose plugin..."
+              sudo mkdir -p /usr/local/lib/docker/cli-plugins
+              sudo curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 \
+                -o /usr/local/lib/docker/cli-plugins/docker-compose
+              sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+            fi
+            # ─────────────────────────────────────────────────────────────────────
+
+            echo "Stopping old containers..."
             docker compose down --remove-orphans || true
 
-            echo "🧼 Removing old images..."
+            echo "Pruning old images..."
             docker image prune -f || true
 
-            echo "🚀 Rebuilding and starting containers..."
+            echo "Building & starting new containers..."
             docker compose up -d --build
 
-            echo "✅ Deployment completed successfully!"
+            echo "Deployment completed successfully! Your app is live at http://$(hostname -I | awk '{print $1}'):8080"
