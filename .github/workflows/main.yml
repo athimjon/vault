@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          source: "Dockerfile, docker compose.yml, target/*.jar"
+          source: "Dockerfile, docker-compose.yml, target/*.jar"
           target: "/tmp/izzy-deploy"
 
       # 5️⃣ Login to server and deploy with docker-compose
@@ -76,12 +76,12 @@ jobs:
             EOF
 
             echo "🐳 Stopping old containers..."
-            docker-compose down --remove-orphans || true
+            docker compose down --remove-orphans || true
 
             echo "🧼 Removing old images..."
             docker image prune -f || true
 
             echo "🚀 Rebuilding and starting containers..."
-            docker-compose up -d --build
+            docker compose up -d --build
 
             echo "✅ Deployment completed successfully!"
