@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4   # updated to v4 (v3 is fine too)
+        uses: actions/checkout@v4
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -46,10 +46,8 @@ jobs:
 
             echo "Creating project directory..."
             mkdir -p /home/${{ secrets.SSH_USER }}/izzy
-
             echo "Cleaning old files..."
             rm -rf /home/${{ secrets.SSH_USER }}/izzy/*
-
             echo "Moving new files..."
             mv /tmp/izzy-deploy/* /home/${{ secrets.SSH_USER }}/izzy/
             cd /home/${{ secrets.SSH_USER }}/izzy
@@ -69,15 +67,16 @@ jobs:
             EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
             EOF
 
-            # ────────────────────── THIS IS THE CRUCIAL PART ──────────────────────
             # Install Docker if missing
             if ! command -v docker >/dev/null 2>&1; then
               echo "Installing Docker..."
               curl -fsSL https://get.docker.com | sudo sh
-              sudo usermod -aG docker ${{ secrets.SSH_USER }} || true
             fi
 
-            # Install Docker Compose plugin if missing (v2 = docker compose)
+            # Ensure user is in docker group
+            sudo usermod -aG docker ${{ secrets.SSH_USER }} || true
+
+            # Install Compose plugin if missing
             if ! docker compose version >/dev/null 2>&1; then
               echo "Installing Docker Compose plugin..."
               sudo mkdir -p /usr/local/lib/docker/cli-plugins
@@ -85,15 +84,14 @@ jobs:
                 -o /usr/local/lib/docker/cli-plugins/docker-compose
               sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
             fi
-            # ─────────────────────────────────────────────────────────────────────
 
-            echo "Stopping old containers..."
-            docker compose down --remove-orphans || true
+            # THIS IS THE MAGIC FIX: Run all Docker commands as the docker group
+            echo "Running deployment with Docker permissions..."
+            exec sg docker -c "
+              docker compose down --remove-orphans || true
+              docker image prune -f || true
+              docker compose up -d --build
+            "
 
-            echo "Pruning old images..."
-            docker image prune -f || true
-
-            echo "Building & starting new containers..."
-            docker compose up -d --build
-
-            echo "Deployment completed successfully! Your app is live at http://$(hostname -I | awk '{print $1}'):8080"
+            echo "Deployment completed successfully!"
+            echo "Your app is live at: http://$(hostname -I | awk '{print $1}'):8080"
