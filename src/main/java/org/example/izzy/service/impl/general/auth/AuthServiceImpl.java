@@ -37,7 +37,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-private final RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     @Value("${jwt.expiration}")
