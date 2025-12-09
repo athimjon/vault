@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          source: "Dockerfile, docker-compose.yml, target/*.jar"
+          source: "Dockerfile, docker compose.yml, target/*.jar"
           target: "/tmp/izzy-deploy"
 
       # 5️⃣ Login to server and deploy with docker-compose
