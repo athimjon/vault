@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(
-        info = @Info(title = "Vault 📂\uD83D\uDDC2 ", version = "v1", description = "PROJECT"),
-        servers = @Server(url = "http://13.62.54.193:8080"),
+        info = @Info(title = "Vault 📂", version = "v1", description = "PROJECT"),
+        servers = @Server(url = "http://13.62.54.193"),
         security = @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "bearerAuth")
 
 )
